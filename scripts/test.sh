@@ -71,11 +71,15 @@ do
         # force usage of local chrome binary, in headless mode
         PROTRACTOR_CHROME_BIN=$(node -p "require('puppeteer').executablePath()") \
         PROTRACTOR_CHROME_ARGS='["lang=en-US","--headless","--disable-gpu","--window-size=1024,768"]' \
-        npm run e2e -- --webdriver-update=false
+        npm run e2e --if-present -- --webdriver-update=false
 
         npm run build -- --no-progress
 
         if [ -n "$TEST_ANDROID" ]; then
+
+            # fix for Android SDK31 being corrupted
+            ln "$ANDROID_HOME/sdk/build-tools/31.0.0/d8" "$ANDROID_HOME/sdk/build-tools/31.0.0/dx"
+            ln "$ANDROID_HOME/sdk/build-tools/31.0.0/lib/d8.jar" "$ANDROID_HOME/sdk/build-tools/31.0.0/lib/dx.jar"
 
             # cordova/android build
             npm run cordova:prepare -- --fast --no-progress

@@ -3,11 +3,14 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
     "module": "es2020",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
     "importHelpers": true,
 <% if (props.strict) { -%>
@@ -19,7 +22,7 @@
 <% if (props.target.includes('electron')) { -%>
     "target": "es5",
 <% } else { -%>
-    "target": "es2015",
+    "target": "es2017",
 <% } -%>
     "typeRoots": [
       "node_modules/@types"
@@ -32,8 +35,6 @@
     "paths": {
       "@app/*": ["src/app/*"],
 <% if (props.usePrefix) { -%>
-      "@core": ["src/app/@core"],
-      "@core/*": ["src/app/@core/*"],
       "@shared": ["src/app/@shared"],
       "@shared/*": ["src/app/@shared/*"],
 <% } -%>
@@ -43,6 +44,10 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+<% if (props.strict) { -%>
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+<% } -%>
   }
 }

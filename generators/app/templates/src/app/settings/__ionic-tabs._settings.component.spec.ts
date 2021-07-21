@@ -6,7 +6,6 @@ import { ActionSheetController, AlertController, Platform } from '@ionic/angular
 import { IonicModule } from '@ionic/angular';
 
 import { SharedModule } from '@shared';
-import { CoreModule } from '@core';
 <% if (props.auth) { -%>
 import { AuthenticationService, CredentialsService } from '@app/auth';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
@@ -24,7 +23,6 @@ describe('SettingsComponent', () => {
           RouterTestingModule,
           TranslateModule.forRoot(),
           IonicModule.forRoot(),
-          CoreModule,
           SharedModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],

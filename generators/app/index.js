@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const chalk = require('chalk');
 const Insight = require('insight');
 const semver = require('semver');
@@ -8,10 +8,10 @@ const Generator = require('@ngx-rocket/core');
 const asciiLogo = require('@ngx-rocket/ascii-logo');
 
 const pkg = require('../../package.json');
-const prompts = require('./prompts');
-const options = require('./options');
-const getLanguages = require('./languages');
-const {deployers} = require('./deployers');
+const prompts = require('./prompts.js');
+const options = require('./options.js');
+const getLanguages = require('./languages.js');
+const {deployers} = require('./deployers.js');
 
 const packageJsonFile = 'package.json';
 const appPath = 'src/app';
@@ -20,6 +20,9 @@ class NgxGenerator extends Generator {
   initializing() {
     this.version = pkg.version;
     this.props = {};
+
+    // Disable automatic env install based on package.json
+    this.features.customInstallTask = true;
 
     // Try to initialize analytics. Insight is broken for some users, so if it fails, proceed as if the --no-analytics flag was present.
     try {
@@ -144,6 +147,12 @@ class NgxGenerator extends Generator {
     this.props.languages = this.props.languages || ['en-US', 'fr-FR'];
     this.props.usePrefix = typeof this.props.usePrefix === 'boolean' ? this.props.usePrefix : true;
     this.props.deploy = this.props.deploy || 'none';
+    this.props.features = this.props.features || [];
+    this.props.pwa = this.props.features.includes('pwa');
+    this.props.auth = this.props.features.includes('auth');
+    this.props.lazy = this.props.features.includes('lazy');
+    this.props.e2e = this.props.features.includes('e2e');
+    this.props.angulartics = this.props.features.includes('angulartics');
     this.shareProps(this.props);
   }
 
@@ -180,12 +189,10 @@ class NgxGenerator extends Generator {
         // Rename folders
         fs.removeSync(path.join(basePath, 'core'));
         fs.removeSync(path.join(basePath, 'shared'));
-        fs.renameSync(path.join(basePath, '@core'), path.join(basePath, 'core'));
         fs.renameSync(path.join(basePath, '@shared'), path.join(basePath, 'shared'));
 
         // Replace imports in files
         const options = {files: 'src/**/*.ts'};
-        replace.sync({...options, from: /@core/g, to: '@app/core'});
         replace.sync({...options, from: /@shared/g, to: '@app/shared'});
       } catch (error) {
         this.log(`${chalk.red('An error occured during prefix config:')}\n${error && error.message}`);
@@ -302,6 +309,8 @@ module.exports = Generator.make({
     'electron-linux': (props) => props.desktop && props.desktop.includes('linux'),
     'tools-hads': (props) => props.tools && props.tools.includes('hads'),
     'tools-jest': (props) => props.tools && props.tools.includes('jest'),
-    'tools-karma': (props) => props.tools && !props.tools.includes('jest')
+    'tools-karma': (props) => props.tools && !props.tools.includes('jest'),
+    e2e: (props) => !props.features || props.features.includes('e2e'),
+    husky: (props) => props.initGit && props.tools.includes('prettier')
   })
 });

@@ -1,10 +1,7 @@
 {
   "target": ["web"],
-  "pwa": false,
   "ui": "raw",
-  "auth": false,
-  "lazy": false,
-  "angulartics": true,
+  "features": ["angulartics", "e2e"],
   "analyticsProvider": "other",
   "tools": ["compodoc", "jest"],
   "utility": ["lodash", "moment"]

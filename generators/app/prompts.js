@@ -1,5 +1,5 @@
-const getLanguages = require('./languages');
-const {deployerChoices} = require('./deployers');
+const getLanguages = require('./languages.js');
+const {deployerChoices} = require('./deployers.js');
 
 module.exports = [
   {
@@ -26,13 +26,6 @@ module.exports = [
         name: 'Desktop app (using Electron)'
       }
     ]
-  },
-  {
-    type: 'confirm',
-    name: 'pwa',
-    message: 'Do you want a progressive web app? (with manifest and service worker)',
-    default: true,
-    when: (props) => props.target && props.target.includes('web')
   },
   {
     type: 'checkbox',
@@ -99,8 +92,8 @@ module.exports = [
     type: 'list',
     name: 'layout',
     message: 'Which kind of layout do you want?',
-    choices: (props) => {
-      return [
+    choices: (props) =>
+      [
         {
           value: 'simple',
           name: 'Simple responsive header bar (more website-oriented)',
@@ -116,28 +109,46 @@ module.exports = [
           name: 'Tabs menu (more app-oriented)',
           when: props.ui === 'ionic'
         }
-      ].filter((choice) => choice.when);
-    },
+      ].filter((choice) => choice.when),
     when: (props) => props.ui === 'material' || props.ui === 'ionic',
     default: 'side-menu'
   },
   {
-    type: 'confirm',
-    name: 'auth',
-    message: 'Do you want authentication?',
-    default: true
-  },
-  {
-    type: 'confirm',
-    name: 'lazy',
-    message: 'Do you want lazy loading?',
-    default: true
-  },
-  {
-    type: 'confirm',
-    name: 'angulartics',
-    message: 'Do you want analytics support (with Angulartics2)?',
-    default: false
+    type: 'checkbox',
+    name: 'features',
+    message: 'Which features do you need?',
+    choices: (props) =>
+      [
+        {
+          value: 'pwa',
+          name: 'Progressive Web App (add manifest and service worker)',
+          checked: true,
+          when: props.target && props.target.includes('web')
+        },
+        {
+          value: 'auth',
+          name: 'Authentication',
+          checked: true,
+          when: true
+        },
+        {
+          value: 'lazy',
+          name: 'Lazy loading',
+          checked: true,
+          when: true
+        },
+        {
+          value: 'e2e',
+          name: 'End-to-end tests',
+          checked: true,
+          when: true
+        },
+        {
+          value: 'angulartics',
+          name: 'Analytics (with Angulartics2)?',
+          when: true
+        }
+      ].filter((choice) => choice.when)
   },
   {
     type: 'checkbox',
@@ -164,14 +175,14 @@ module.exports = [
         name: 'Other'
       }
     ],
-    when: (props) => props.angulartics,
+    when: (props) => props.features && props.features.includes('angulartics'),
     default: 'ga'
   },
   {
     type: 'input',
     name: 'googleAnalyticsAccount',
     message: 'What is your Google Analytics account (e.g. UA-1234567-1)?',
-    when: (props) => props.angulartics && props.analyticsProvider === 'ga'
+    when: (props) => props.features && props.features.includes('angulartics') && props.analyticsProvider === 'ga'
   },
   {
     type: 'checkbox',
@@ -194,11 +205,11 @@ module.exports = [
       },
       {
         value: 'jest',
-        name: 'Jest (Delightful JavaScript Testing)'
+        name: 'Jest (replaces Jasmine)'
       },
       {
         value: 'puppeteer',
-        name: 'Puppeteer (Embedded Chrome for testing)'
+        name: 'Puppeteer (embedded Chrome for testing)'
       }
     ]
   },

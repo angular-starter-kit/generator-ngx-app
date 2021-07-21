@@ -2,8 +2,7 @@
   "target": ["cordova"],
   "mobile": ["ios", "android"],
   "ui": "bootstrap",
-  "auth": true,
-  "lazy": false,
+  "features": ["auth", "e2e"],
   "strict": true,
   "tools": ["jest"]
 }

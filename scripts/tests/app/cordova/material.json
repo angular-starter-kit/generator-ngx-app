@@ -3,6 +3,5 @@
   "mobile": ["ios", "android"],
   "ui": "material",
   "layout": "side-menu",
-  "auth": false,
-  "lazy": false
+  "features": []
 }

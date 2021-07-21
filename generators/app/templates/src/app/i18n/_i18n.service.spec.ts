@@ -31,7 +31,11 @@ class MockTranslateService {
 describe('I18nService', () => {
   let i18nService: I18nService;
   let translateService: TranslateService;
+<% if (props.tools.includes('jest')) { -%>
+  let onLangChangeSpy: jest.Mock;
+<% } else { -%>
   let onLangChangeSpy: jasmine.Spy;
+<% } -%>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,12 +49,21 @@ describe('I18nService', () => {
     translateService = TestBed.inject(TranslateService);
 
     // Create spies
+<% if (props.tools.includes('jest')) { -%>
+  onLangChangeSpy = jest.fn();
+  translateService.onLangChange
+    .subscribe((event: LangChangeEvent) => {
+      onLangChangeSpy(event.lang);
+    });
+  jest.spyOn(translateService, 'use');
+<% } else { -%>
     onLangChangeSpy = jasmine.createSpy('onLangChangeSpy');
     translateService.onLangChange
       .subscribe((event: LangChangeEvent) => {
         onLangChangeSpy(event.lang);
       });
     spyOn(translateService, 'use').and.callThrough();
+<% } -%>
   });
 
   afterEach(() => {

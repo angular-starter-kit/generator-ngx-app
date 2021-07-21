@@ -1,8 +1,6 @@
 {
   "target": ["web"],
-  "pwa": true,
   "ui": "bootstrap",
-  "auth": true,
-  "lazy": false,
+  "features": ["pwa", "auth"],
   "tools": ["prettier", "hads", "jest"]
 }

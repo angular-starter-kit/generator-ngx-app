@@ -127,13 +127,12 @@ class NgxCli {
 
     if (addon) {
       args = args.filter((arg) => arg !== '--addon' && arg !== '-a');
-      env.lookup(() =>
-        env.run(['ngx-rocket:addon'].concat(args), {
-          update,
-          packageManager: this._packageManager(),
-          'skip-welcome': true
-        })
-      );
+      env.lookup();
+      env.run(['ngx-rocket:addon', ...args], {
+        update,
+        packageManager: this._packageManager(),
+        'skip-welcome': true
+      });
     } else {
       const addonsOption = options.addons;
       let addons;
@@ -146,21 +145,13 @@ class NgxCli {
         addons = addons.filter((addon) => !disabled[addon]);
       }
 
-      await new Promise((resolve) =>
-        // eslint-disable-next-line no-promise-executor-return
-        env.lookup(() =>
-          env.run(
-            ['ngx-rocket'].concat(args),
-            {
-              update,
-              packageManager: this._packageManager(),
-              addons: addons.join(' '),
-              'skip-welcome': true
-            },
-            resolve
-          )
-        )
-      );
+      env.lookup();
+      env.run(['ngx-rocket', ...args], {
+        update,
+        packageManager: this._packageManager(),
+        addons: addons.join(' '),
+        'skip-welcome': true
+      });
       console.log();
     }
   }
@@ -193,7 +184,7 @@ class NgxCli {
   async list(npm) {
     let addons;
     if (npm) {
-      addons = await Promise.resolve(spawn.sync('npm', ['search', addonKey, '--json'], {stdio: [0, null, 2]}).stdout);
+      addons = spawn.sync('npm', ['search', addonKey, '--json'], {stdio: [0, null, 2]}).stdout;
       addons = addons ? JSON.parse(addons) : [];
       addons = addons.filter((addon) => !blacklistedNpmAddons.has(addon.name));
     } else {
@@ -212,21 +203,19 @@ class NgxCli {
     }
   }
 
-  _findAddons() {
-    return new Promise((resolve) => {
-      env.lookup(() => {
-        const generators = env.getGeneratorsMeta();
-        const addons = Object.keys(generators)
-          .map((alias) => generators[alias])
-          .filter((generator) => {
-            const packagePath = this._findPackageJson(generator.resolved);
-            const keywords = require(packagePath).keywords || [];
-            return keywords.includes(addonKey);
-          })
-          .map((generator) => generator.namespace.replace(/(.*?):app$/, '$1'));
-        resolve(addons);
-      });
-    });
+  async _findAddons() {
+    env.lookup();
+    const generators = env.getGeneratorsMeta();
+    const addons = Object.keys(generators)
+      .map((alias) => generators[alias])
+      .filter((generator) => {
+        const packagePath = this._findPackageJson(generator.resolved);
+        const keywords = require(packagePath).keywords || [];
+        return keywords.includes(addonKey);
+      })
+      .map((generator) => generator.namespace.replace(/(.*?):app$/, '$1'));
+
+    return addons;
   }
 
   _findPackageJson(basePath) {

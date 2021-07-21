@@ -3,8 +3,7 @@
   "mobile": ["ios", "android"],
   "ui": "material",
   "layout": "side-menu",
-  "auth": true,
-  "lazy": false,
-  "strict": true,
+  "features": ["auth"],
+  "strict": false,
   "tools": ["jest"]
 }

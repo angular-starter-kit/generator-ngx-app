@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 <% } -%>
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 <% if (props.pwa) { -%>
 import { ServiceWorkerModule } from '@angular/service-worker';
 <% } -%>
@@ -15,7 +16,6 @@ import { MaterialModule } from './material.module';
 <% } else if (props.ui === 'bootstrap') { -%>
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 <% } else if (props.ui === 'ionic') { -%>
-import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 <% } -%>
 <% if (props.target.includes('cordova')) { -%>
@@ -33,8 +33,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 <% if (props.pwa) { -%>
 import { environment } from '@env/environment';
 <% } -%>
-import { CoreModule } from '@core';
-import { SharedModule } from '@shared';
+import { RouteReusableStrategy, ApiPrefixInterceptor, ErrorHandlerInterceptor, SharedModule } from '@shared';
 <% if (props.auth) { -%>
 import { AuthModule } from '@app/auth';
 <% } -%>
@@ -57,6 +56,7 @@ import { AppRoutingModule } from './app-routing.module';
 <% } -%>
     FormsModule,
     HttpClientModule,
+    RouterModule,
     TranslateModule.forRoot(),
 <% if (props.ui === 'material') { -%>
     BrowserAnimationsModule,
@@ -66,7 +66,6 @@ import { AppRoutingModule } from './app-routing.module';
 <% } else if (props.ui === 'ionic') { -%>
     IonicModule.forRoot(),
 <% } -%>
-    CoreModule,
     SharedModule,
     ShellModule,
     HomeModule,
@@ -86,6 +85,20 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   declarations: [AppComponent],
   providers: [
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ApiPrefixInterceptor,
+        multi: true
+      },
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ErrorHandlerInterceptor,
+        multi: true
+      },
+      {
+        provide: RouteReuseStrategy,
+        useClass: RouteReusableStrategy
+      },
 <% if (props.location === 'hash') { -%>
      // This strategy with base-href './' allows to move the app to any subsite
 <%   if (props.target.includes('cordova')) { -%>

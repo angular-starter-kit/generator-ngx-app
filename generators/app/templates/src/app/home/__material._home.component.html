@@ -6,7 +6,7 @@
     <mat-card-content>
       <mat-card-title translate>Hello world !</mat-card-title>
       <mat-card-subtitle>
-        <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+        <app-loader [isLoading]="isLoading" [size]="1.5"></app-loader>
         <q [hidden]="isLoading">{{quote}}</q>
       </mat-card-subtitle>
 <% if (props.angulartics) { -%>
@@ -15,7 +15,7 @@
           mat-raised-button
           angulartics2On="click"
           angularticsAction="Click button below quote"
-          [angularticsCategory]="quote">
+          angularticsCategory="test">
           Click me to send an Analytics event
         </button>
       </mat-card-actions>

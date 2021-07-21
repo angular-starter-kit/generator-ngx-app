@@ -14,23 +14,20 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Angulartics2Module } from 'angulartics2';
 <% } -%>
 
-import { CoreModule } from '@core';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-<% if (props.target.includes('cordova') && !props.tools.includes('jest')) { -%>
 
+<% if (props.target.includes('cordova') && !props.tools.includes('jest')) { -%>
   let statusBarSpy: jasmine.Spy;
   let splashScreenSpy: jasmine.Spy;
   let keyboardSpy: jasmine.Spy;
-
 <% } else if (props.target.includes('cordova') && props.tools.includes('jest')) { -%>
-
   let statusBarSpy: any;
   let splashScreenSpy: any;
   let keyboardSpy: any;
-
 <% } -%>
+
   beforeEach(waitForAsync(() => {
 <% if (props.target.includes('cordova') && !props.tools.includes('jest')) { -%>
     statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
@@ -59,8 +56,7 @@ describe('AppComponent', () => {
         Angulartics2Module.forRoot(),
 <% } -%>
         RouterTestingModule,
-        TranslateModule.forRoot(),
-        CoreModule
+        TranslateModule.forRoot()
       ],
       declarations: [AppComponent],
 <% if (props.target.includes('cordova')) { -%>

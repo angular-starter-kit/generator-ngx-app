@@ -1,0 +1,30 @@
+name: build
+on: push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: ['12', '>=14']
+
+    name: Node.js v${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        npm ci
+        npm test
+      env:
+        CI: true
+
+  build_all:
+    if: always()
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.build.result != 'success' }}
+        run: exit 1

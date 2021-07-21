@@ -1,4 +1,4 @@
-const {deployerValues, deployerValuesHelp} = require('./deployers');
+const {deployerValues, deployerValuesHelp} = require('./deployers.js');
 
 module.exports = [
   {
@@ -63,7 +63,7 @@ module.exports = [
     type: 'Boolean',
     required: false,
     description: 'Enable TypeScript strict mode',
-    defaults: false
+    defaults: true
   },
   {
     name: 'prefix',

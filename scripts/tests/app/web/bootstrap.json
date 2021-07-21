@@ -1,10 +1,7 @@
 {
   "target": ["web"],
-  "pwa": false,
   "ui": "bootstrap",
-  "auth": false,
-  "lazy": false,
-  "angulartics": true,
+  "features": ["angulartics", "e2e"],
   "analyticsProvider": "ga",
   "googleAnalyticsAccount": "UA-116237171-1",
   "utility": ["ramda", "date-fns"]

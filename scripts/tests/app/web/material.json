@@ -1,12 +1,8 @@
 {
   "target": ["web"],
-  "pwa": false,
   "ui": "material",
   "layout": "simple",
-  "auth": false,
-  "lazy": false,
-  "angulartics": false,
+  "features": ["e2e"],
   "location": "hash",
-  "strict": true,
   "tools": ["jest"]
 }

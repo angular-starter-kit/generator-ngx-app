@@ -16,7 +16,11 @@ describe('AuthenticationService', () => {
     authenticationService = TestBed.inject(AuthenticationService);
     credentialsService = TestBed.inject(CredentialsService);
     credentialsService.credentials = null;
+<% if (props.tools.includes('jest')) { -%>
+    jest.spyOn(credentialsService, 'setCredentials');
+<% } else { -%>
     spyOn(credentialsService, 'setCredentials').and.callThrough();
+<% } -%>
   });
 
   describe('login', () => {
@@ -65,7 +69,11 @@ describe('AuthenticationService', () => {
       // Assert
       request.subscribe(() => {
         expect(credentialsService.setCredentials).toHaveBeenCalled();
+<% if (props.tools.includes('jest')) { -%>
+        expect((credentialsService.setCredentials as jest.Mock).mock.calls[0][1]).toBe(undefined);
+<% } else { -%>
         expect((credentialsService.setCredentials as jasmine.Spy).calls.mostRecent().args[1]).toBe(undefined);
+<% } -%>
       });
     }));
 
@@ -81,7 +89,11 @@ describe('AuthenticationService', () => {
       // Assert
       request.subscribe(() => {
         expect(credentialsService.setCredentials).toHaveBeenCalled();
+<% if (props.tools.includes('jest')) { -%>
+        expect((credentialsService.setCredentials as jest.Mock).mock.calls[0][1]).toBe(true);
+<% } else { -%>
         expect((credentialsService.setCredentials as jasmine.Spy).calls.mostRecent().args[1]).toBe(true);
+<% } -%>
       });
     }));
   });

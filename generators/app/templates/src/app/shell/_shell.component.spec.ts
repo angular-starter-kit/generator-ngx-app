@@ -12,7 +12,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 <% } -%>
 
-import { CoreModule } from '@core';
 <% if (props.auth) { -%>
 import { AuthenticationService, CredentialsService } from '@app/auth';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
@@ -40,7 +39,6 @@ describe('ShellComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         TranslateModule.forRoot(),
         I18nModule,
 <% if (props.ui === 'ionic') { -%>
@@ -57,7 +55,7 @@ describe('ShellComponent', () => {
         FlexLayoutModule,
         MaterialModule,
 <% } -%>
-        CoreModule
+        RouterTestingModule
       ],
 <% if ((props.auth) || (props.ui === 'ionic')) { -%>
       providers: [

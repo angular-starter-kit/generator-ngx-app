@@ -3,7 +3,6 @@
   "mobile": ["ios", "android"],
   "ui": "ionic",
   "layout": "tabs",
-  "auth": true,
-  "lazy": false,
+  "features": ["auth"],
   "tools": ["jest"]
 }

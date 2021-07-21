@@ -1,7 +1,7 @@
 {
   "name": "generator-ngx-rocket",
   "version": "9.2.1",
-  "description": "Extensible Angular 11+ enterprise-grade project generator based on angular-cli with best practices from the community. Includes PWA/Cordova/Electron support, coding guides and more!",
+  "description": "Extensible Angular 12+ enterprise-grade project generator based on angular-cli with best practices from the community. Includes PWA/Cordova/Electron support, coding guides and more!",
   "repository": {
     "type": "git",
     "url": "https://github.com/ngx-rocket/generator-ngx-rocket.git"
@@ -58,40 +58,42 @@
   },
   "dependencies": {
     "@ngx-rocket/ascii-logo": "^1.0.1",
-    "@ngx-rocket/core": "~6.0.0",
-    "chalk": "^4.1.0",
-    "conf": "^8.0.0",
+    "@ngx-rocket/core": "^7.0.1",
+    "chalk": "^4.1.1",
+    "conf": "^10.0.1",
     "cross-spawn": "^7.0.3",
     "figures": "^3.2.0",
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^10.0.0",
     "fuzz-run": "^1.0.2",
-    "inquirer": "^7.3.3",
+    "inquirer": "^8.1.2",
     "insight": "^0.10.3",
     "lodash.camelcase": "^4.3.0",
     "lodash.get": "^4.4.2",
     "lodash.upperfirst": "^4.3.1",
     "minimist": "^1.2.5",
-    "replace-in-file": "^6.1.0",
-    "semver": "^7.3.2",
-    "update-notifier": "^5.0.1",
-    "yeoman-environment": "^2.10.3"
+    "replace-in-file": "^6.2.0",
+    "semver": "^7.3.5",
+    "update-notifier": "^5.1.0",
+    "yeoman-environment": "^3.5.1"
   },
   "devDependencies": {
-    "commitizen": "^4.2.1",
+    "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "semantic-release": "^17.1.1",
+    "semantic-release": "^17.4.4",
     "semantic-release-npm-github": "^1.0.4",
-    "xo": "^0.37.1"
+    "xo": "^0.42.0"
   },
   "engines": {
-    "node": ">=12.0.0",
+    "node": ">=12.14.1",
     "npm": ">=5.2"
   },
   "xo": {
     "space": true,
     "prettier": true,
     "rules": {
-      "unicorn/no-array-reduce": "off"
+      "unicorn/no-array-reduce": "off",
+      "unicorn/prefer-module": "off",
+      "unicorn/no-array-for-each": "off"
     }
   },
   "config": {

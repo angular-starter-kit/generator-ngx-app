@@ -1,10 +1,6 @@
 {
   "target": ["electron"],
   "desktop": ["windows", "mac", "linux"],
-  "pwa": false,
   "ui": "bootstrap",
-  "auth": false,
-  "lazy": false,
-  "angulartics": false,
-  "strict": true
+  "features": ["auth"]
 }

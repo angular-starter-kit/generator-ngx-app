@@ -1,10 +1,8 @@
 {
   "target": ["web", "cordova"],
-  "pwa": false,
   "mobile": ["ios", "android"],
   "ui": "material",
   "layout": "simple",
-  "auth": true,
-  "lazy": true,
+  "features": ["e2e", "auth", "lazy"],
   "usePrefix": false
 }

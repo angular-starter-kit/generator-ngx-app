@@ -36,7 +36,7 @@ For reference, here is a UI-framework-agnostic example.
 <button
   angulartics2On="click"
   angularticsAction="Button clicked"
-  [angularticsCategory]="quote">
+  angularticsCategory="UI">
   Click me to send the current quote as an Analytics event
 </button>
 ```

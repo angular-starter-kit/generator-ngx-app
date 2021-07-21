@@ -7,8 +7,6 @@ module.exports = {
   moduleNameMapper: {
     '@app/(.*)': '<rootDir>/src/app/$1',
 <% if (props.usePrefix) { -%>
-    '@core': ['<rootDir>/src/app/@core'],
-    '@core/(.*)': ['<rootDir>/src/app/@core/$1'],
     '@shared': ['<rootDir>/src/app/@shared'],
     '@shared/(.*)': ['<rootDir>/src/app/@shared/$1'],
 <% } -%>
@@ -17,7 +15,10 @@ module.exports = {
   globals: {
     'ts-jest': {
       allowSyntheticDefaultImports: true,
-      tsconfig: '<rootDir>/tsconfig.spec.json'
+      tsconfig: '<rootDir>/tsconfig.spec.json',
+      diagnostics: {
+        ignoreCodes: ['TS151001'],
+      }
     },
   },
   // Do not ignore librairies such as ionic, ionic-native or bootstrap to transform them during unit testing.

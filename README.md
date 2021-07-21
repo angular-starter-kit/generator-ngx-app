@@ -8,7 +8,7 @@
 
 ![ngx-rocket logo](https://user-images.githubusercontent.com/593151/28924751-08023b32-7863-11e7-9186-c17d4647d861.png)
 
-> Extensible Angular 11+ enterprise-grade project generator based on
+> Extensible Angular 12+ enterprise-grade project generator based on
 > [angular-cli](https://github.com/angular/angular-cli) with best practices from the community.
 > Includes PWA, Cordova & Electron support, coding guides and more!
 
@@ -70,8 +70,7 @@ docs/                        project docs and coding guides
 e2e/                         end-to-end tests
 src/                         project source code
 |- app/                      app components
-|  |- @core/                 core module (singleton services and single-use components)
-|  |- @shared/               shared module  (common components, directives and pipes)
+|  |- @shared/               shared module  (common components, directives, pipes and services)
 |  |- app.component.*        app root component (shell)
 |  |- app.module.ts          app root module definition
 |  |- app-routing.module.ts  app routes
@@ -234,7 +233,7 @@ Native mobile application bundling is based on [Cordova](https://cordova.apache.
 - `--location-strategy [hash|path]`: [location strategy](https://angular.io/api/common/LocationStrategy) to use in
   Angular router (default is `path`).
 - `--no-git`: do not initialize git repository.
-- `--strict`: enable all TypeScript strict type checking options.
+- `--no-strict`: disable TypeScript strict type checking options.
 - `--skip-quickstart`: disable quick start message after project generation.
 - `--no-prefix`: do not add `@` prefix to `core`/`shared` folders.
 - `--deploy <option>`: choose automatic deployment option. Use `ngx n --deploy` to see possible values.

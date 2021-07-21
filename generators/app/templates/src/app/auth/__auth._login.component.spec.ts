@@ -12,7 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 <% } -%>
 
-import { CoreModule } from '@core';
 <% if (props.ui === 'material') { -%>
 import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
@@ -43,8 +42,7 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         TranslateModule.forRoot(),
         I18nModule,
-        ReactiveFormsModule,
-        CoreModule
+        ReactiveFormsModule
       ],
 <% if (props.ui === 'ionic') { -%>
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -12,7 +12,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Angulartics2Module } from 'angulartics2';
 <% } -%>
 
-import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 <% if (props.ui === 'material') { -%>
 import { MaterialModule } from '@app/material.module';
@@ -38,7 +37,6 @@ describe('HomeComponent', () => {
           RouterTestingModule,
           Angulartics2Module.forRoot(),
 <% } -%>
-          CoreModule,
           SharedModule,
           HttpClientTestingModule
         ],
